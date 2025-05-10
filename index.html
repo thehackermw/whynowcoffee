@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WHY NOT NOW Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(to right, #fdf6e3, #fae3b8);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      padding: 20px;
+    }
+    header img {
+      height: 90px;
+    }
+    .main-buttons {
+      margin: 30px 0;
+    }
+    .main-buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 25px;
+      background-color: #3a2e2e;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+    .main-buttons a:hover {
+      background-color: #6e4e3d;
+    }
+    .qr-container {
+      margin: 30px auto;
+      display: none;
+    }
+    .qr-container img {
+      width: 160px;
+      border: 2px solid #3a2e2e;
+      border-radius: 10px;
+      padding: 5px;
+    }
+    .container {
+      display: none;
+      width: 100vw;
+      height: calc(100vh - 280px);
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .nav {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: #3a2e2e;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    .dot.active {
+      opacity: 1;
+    }
+    .back-button {
+      display: none;
+      margin-top: 20px;
+    }
+    .back-button a {
+      padding: 10px 20px;
+      background-color: #3a2e2e;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    footer {
+      margin: 20px auto;
+      font-size: 0.9rem;
+      color: #6d5c5c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="WHY NOT NOW Coffee logo">
+  </header>
+
+  <div class="main-buttons" id="main-buttons">
+    <a href="#" onclick="showQR()">Scanner le Code QR</a>
+    <a href="#" onclick="openMenu()">Voir le Menu</a>
+  </div>
+
+  <div class="qr-container" id="qr">
+    <p>Scannez ce QR Code pour accéder au menu :</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=menu.html" alt="QR Code Menu">
+  </div>
+
+  <div id="menu-section" class="container">
+    <div class="slide active" style="background-image: url('menu_1_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_2_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_3_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_4_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_5_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_6_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_7_1.jpg');"></div>
+
+    <div class="nav">
+      <div class="dot active" onclick="showSlide(0)"></div>
+      <div class="dot" onclick="showSlide(1)"></div>
+      <div class="dot" onclick="showSlide(2)"></div>
+      <div class="dot" onclick="showSlide(3)"></div>
+      <div class="dot" onclick="showSlide(4)"></div>
+      <div class="dot" onclick="showSlide(5)"></div>
+      <div class="dot" onclick="showSlide(6)"></div>
+    </div>
+  </div>
+
+  <div class="back-button" id="back-button">
+    <a href="#" onclick="goBack()">Retour à l'accueil</a>
+  </div>
+
+  <footer>
+    WHY NOT NOW Coffee &nbsp;|&nbsp; <a href="https://instagram.com/whynowcoffee" target="_blank">@whynowcoffee</a>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const container = document.getElementById("menu-section");
+    const qr = document.getElementById("qr");
+    const mainButtons = document.getElementById("main-buttons");
+    const backButton = document.getElementById("back-button");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        dots[i].classList.remove('active');
+      });
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      currentSlide = index;
+    }
+
+    setInterval(() => {
+      if (container.style.display !== "none") {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+    }, 4000);
+
+    function openMenu() {
+      container.style.display = "flex";
+      mainButtons.style.display = "none";
+      qr.style.display = "none";
+      backButton.style.display = "block";
+    }
+
+    function showQR() {
+      qr.style.display = "block";
+      container.style.display = "none";
+      mainButtons.style.display = "none";
+      backButton.style.display = "block";
+    }
+
+    function goBack() {
+      container.style.display = "none";
+      qr.style.display = "none";
+      mainButtons.style.display = "block";
+      backButton.style.display = "none";
+    }
+  </script>
+</body>
+</html>
