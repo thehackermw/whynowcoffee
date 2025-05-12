@@ -44,7 +44,6 @@
     }
     .qr-container {
       margin: 30px auto;
-      display: none;
     }
     .qr-container img {
       width: 160px;
@@ -52,10 +51,15 @@
       border-radius: 10px;
       padding: 5px;
     }
+    footer {
+      margin: 20px auto;
+      font-size: 0.9rem;
+      color: #6d5c5c;
+    }
     .container {
       display: none;
       width: 100vw;
-      height: calc(100vh - 280px);
+      height: calc(100vh - 240px);
       justify-content: center;
       align-items: center;
       position: relative;
@@ -93,23 +97,6 @@
     .dot.active {
       opacity: 1;
     }
-    .back-button {
-      display: none;
-      margin-top: 20px;
-    }
-    .back-button a {
-      padding: 10px 20px;
-      background-color: #3a2e2e;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-    footer {
-      margin: 20px auto;
-      font-size: 0.9rem;
-      color: #6d5c5c;
-    }
   </style>
 </head>
 <body>
@@ -117,14 +104,9 @@
     <img src="logo.png" alt="WHY NOT NOW Coffee logo">
   </header>
 
-  <div class="main-buttons" id="main-buttons">
-    <a href="#" onclick="showQR()">Scanner le Code QR</a>
+  <div class="main-buttons">
     <a href="#" onclick="openMenu()">Voir le Menu</a>
-  </div>
-
-  <div class="qr-container" id="qr">
-    <p>Scannez ce QR Code pour accéder au menu :</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=menu.html" alt="QR Code Menu">
+    <a href="#qr">Scanner le Code QR</a>
   </div>
 
   <div id="menu-section" class="container">
@@ -133,8 +115,8 @@
     <div class="slide" style="background-image: url('menu_3_1.jpg');"></div>
     <div class="slide" style="background-image: url('menu_4_1.jpg');"></div>
     <div class="slide" style="background-image: url('menu_5_1.jpg');"></div>
-    <div class="slide" style="background-image: url('menu_7_1.jpg');"></div>
     <div class="slide" style="background-image: url('menu_6_1.jpg');"></div>
+    <div class="slide" style="background-image: url('menu_7_1.jpg');"></div>
 
     <div class="nav">
       <div class="dot active" onclick="showSlide(0)"></div>
@@ -147,8 +129,9 @@
     </div>
   </div>
 
-  <div class="back-button" id="back-button">
-    <a href="#" onclick="goBack()">Retour à l'accueil</a>
+  <div class="qr-container" id="qr">
+    <p>Scannez ce QR Code pour accéder au menu :</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://whynowcoffee.github.io" alt="QR Code Menu">
   </div>
 
   <footer>
@@ -160,9 +143,6 @@
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
     const container = document.getElementById("menu-section");
-    const qr = document.getElementById("qr");
-    const mainButtons = document.getElementById("main-buttons");
-    const backButton = document.getElementById("back-button");
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
@@ -183,23 +163,7 @@
 
     function openMenu() {
       container.style.display = "flex";
-      mainButtons.style.display = "none";
-      qr.style.display = "none";
-      backButton.style.display = "block";
-    }
-
-    function showQR() {
-      qr.style.display = "block";
-      container.style.display = "none";
-      mainButtons.style.display = "none";
-      backButton.style.display = "block";
-    }
-
-    function goBack() {
-      container.style.display = "none";
-      qr.style.display = "none";
-      mainButtons.style.display = "block";
-      backButton.style.display = "none";
+      document.querySelector('.main-buttons').style.display = "none";
     }
   </script>
 </body>
